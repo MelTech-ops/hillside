@@ -1,0 +1,13 @@
+{
+  "_comment": "This is the shape the GitHub Action writes to facebook-posts.json. It is here as a reference only - the site does not read this .sample file. Delete it whenever.",
+  "updated": "2026-09-19T20:00:00+00:00",
+  "posts": [
+    {
+      "id": "100072511775450_123456789",
+      "message": "Saturday special is up — split pea with ham and prosciutto, $10. Kitchen's on until 10.",
+      "created": "2026-09-19T15:04:00+0000",
+      "url": "https://www.facebook.com/100072511775450/posts/123456789",
+      "image": "https://scontent.xx.fbcdn.net/example.jpg"
+    }
+  ]
+}
