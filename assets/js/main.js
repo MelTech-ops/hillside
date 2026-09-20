@@ -232,6 +232,54 @@
       });
   }
 
+
+  /* ----------------------------------------------------------------------
+     7. Regulars carousel (index.html)
+     ---------------------------------------------------------------------- */
+  var reg = document.querySelector("[data-regulars]");
+  if (reg) {
+    var slides = [].slice.call(reg.querySelectorAll(".regulars__slide"));
+    var dotsWrap = reg.querySelector("[data-regulars-dots]");
+    var cap = reg.querySelector("[data-regulars-cap]");
+    var idx = 0, timer = null;
+    var DELAY = 5200;
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (slides.length > 1 && dotsWrap) {
+      slides.forEach(function (sl, n) {
+        var b = document.createElement("button");
+        b.type = "button";
+        b.className = "regulars__dot" + (n === 0 ? " is-active" : "");
+        b.setAttribute("aria-label", "Show photo " + (n + 1) + " of " + slides.length);
+        b.addEventListener("click", function () { show(n); restart(); });
+        dotsWrap.appendChild(b);
+      });
+    }
+
+    function show(n) {
+      idx = (n + slides.length) % slides.length;
+      slides.forEach(function (sl, k) { sl.classList.toggle("is-active", k === idx); });
+      if (dotsWrap) {
+        [].forEach.call(dotsWrap.children, function (d, k) {
+          d.classList.toggle("is-active", k === idx);
+        });
+      }
+      if (cap) cap.textContent = slides[idx].getAttribute("data-caption") || "";
+    }
+    function start() { if (!reduce && slides.length > 1 && !timer) timer = setInterval(function () { show(idx + 1); }, DELAY); }
+    function stop() { if (timer) { clearInterval(timer); timer = null; } }
+    function restart() { stop(); start(); }
+
+    reg.addEventListener("mouseenter", stop);
+    reg.addEventListener("mouseleave", start);
+    reg.addEventListener("focusin", stop);
+    reg.addEventListener("focusout", start);
+    document.addEventListener("visibilitychange", function () { document.hidden ? stop() : start(); });
+
+    show(0);
+    start();
+  }
+
   /* ----------------------------------------------------------------------
      5. Footer year
      ---------------------------------------------------------------------- */
